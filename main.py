@@ -170,13 +170,20 @@ class WorkoutPlanner:
         for group, time_seconds in summary['muscle_group_breakdown'].items():
             print(f"  • {group.title()}: {round(time_seconds/60, 1)} minutes")
 
+# TODO: Add a frontend that I can use to customise the workout
+# TODO: Add a hierarchy of tags such that we can simplify tag maintenance
+# TODO: Add exercise progressions
+# TODO: Add a mode of selecting exercises based on only muscle groups and not time.
+# TODO: Add supersets functionality
+# TODO: Add more nuance to how we pick the specific exercises
+# TODO: Add support for wanting to do specific exercises
 
 def main():
     """Example usage of the workout planner."""
     planner = WorkoutPlanner()
     
     # Example workout parameters
-    duration = 60  # 30 minute workout
+    duration = 30  # 30 minute workout
     time_split = {
         "glutes": 0.3,
         "rear delts": 0.3,

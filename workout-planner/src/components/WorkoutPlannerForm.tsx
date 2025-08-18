@@ -34,8 +34,8 @@ export default function WorkoutPlannerForm({
   isGenerating = false,
   error = null 
 }: WorkoutPlannerFormProps) {
-  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState<string[]>([]);
-  const [exercisesPerGroup, setExercisesPerGroup] = useState<number>(2);
+  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState<string[]>(['core', 'glutes', 'rear delts']);
+  const [exercisesPerGroup, setExercisesPerGroup] = useState<number>(1);
   const [setsPerExercise, setSetsPerExercise] = useState<number>(3);
 
   const handleMuscleGroupChange = useCallback((event: SelectChangeEvent<string[]>) => {

@@ -332,6 +332,17 @@
 			"link": null
 		},
 		{
+			"name": "Banded step outs",
+			"set_duration_sec": 60,
+			"rest_duration_sec": 120,
+			"tags": [
+				"glutes",
+				"glute medius"
+			],
+			"notes": "Tap for out to side with band around ankles, just like in the pilates class",
+			"link": "https://www.youtube.com/watch?v=dKluhLck1Zs"
+		},
+		{
 			"name": "Posterior Bunkies (Isometric)",
 			"set_duration_sec": 60,
 			"rest_duration_sec": 120,

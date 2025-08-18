@@ -170,6 +170,7 @@ class WorkoutPlanner:
         for group, time_seconds in summary['muscle_group_breakdown'].items():
             print(f"  • {group.title()}: {round(time_seconds/60, 1)} minutes")
 
+# TODO: Split exercises into multiple different files for the different kinds
 # TODO: Add a frontend that I can use to customise the workout
 # TODO: Add a hierarchy of tags such that we can simplify tag maintenance
 # TODO: Add exercise progressions

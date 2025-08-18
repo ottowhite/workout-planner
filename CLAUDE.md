@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Python workout planner that generates personalized workout routines based on:
+This repository contains both a Python workout planner and a modern Next.js web frontend that generates personalized workout routines based on:
 - Duration preferences (in minutes)
 - Target muscle groups
 - Time allocation per muscle group
@@ -12,18 +12,27 @@ This is a Python workout planner that generates personalized workout routines ba
 
 ## Commands
 
-### Running the Application
+### Running the Python Application
 ```bash
 python3 main.py
 ```
 Runs the example workout generation with predefined parameters (30-minute workout targeting glutes, rear delts, and chest).
 
-### Testing the Application
-No formal test framework is configured. Testing should be done by running the main script and validating output manually.
+### Running the Next.js Frontend
+```bash
+cd workout-planner
+npm install  # First time setup
+npm run dev  # Development server at http://localhost:3000
+npm run build  # Production build
+```
+
+### Testing the Applications
+- **Python**: No formal test framework is configured. Testing should be done by running the main script and validating output manually.
+- **Next.js**: The application includes TypeScript validation and ESLint checking. Run `npm run build` to validate the entire application.
 
 ## Code Architecture
 
-### Core Components
+### Python Components
 
 **WorkoutPlanner Class (`main.py:6-172`)**
 - Main application class that handles workout generation logic
@@ -34,8 +43,25 @@ No formal test framework is configured. Testing should be done by running the ma
   - `_calculate_summary()`: Computes workout statistics
   - `print_workout()`: Formatted output display
 
+### Next.js Frontend Components
+
+**Core Logic (`workout-planner/src/lib/`)**
+- `workoutPlanner.ts`: TypeScript port of the Python WorkoutPlanner class with identical functionality
+- `types.ts`: TypeScript interfaces for Exercise, Workout, and related data structures
+- `theme.ts`: Material-UI theme configuration for consistent styling
+
+**UI Components (`workout-planner/src/components/`)**
+- `WorkoutPlannerForm.tsx`: Interactive form with duration slider, muscle group selection, and time allocation controls
+- `WorkoutDisplay.tsx`: Beautiful workout display with collapsible sections, exercise details, and summary statistics
+- `ThemeProvider.tsx`: Material-UI theme wrapper component
+
+**Main Application (`workout-planner/src/app/`)**
+- `page.tsx`: Main application page that orchestrates form and display components
+- `layout.tsx`: Root layout with Material-UI theme provider
+
 **Exercise Data Structure (`exercises.json`)**
-- JSON array containing exercise objects with:
+- Shared JSON database used by both Python and TypeScript implementations
+- Contains exercise objects with:
   - `name`: Exercise name
   - `set_duration_sec`: Work period duration
   - `rest_duration_sec`: Rest period between sets
@@ -52,16 +78,34 @@ No formal test framework is configured. Testing should be done by running the ma
 
 ### Key Features
 
+**Both Python and TypeScript Implementations:**
 - **Tag-based Exercise Filtering**: Exercises are categorized using hierarchical tags (e.g., "core family", "glutes", "rear delts")
 - **Dynamic Time Management**: Automatically fits exercises within specified duration constraints
 - **Structured Warmup**: Always includes standardized 10-minute warmup routine
-- **Comprehensive Output**: Provides detailed workout plan with timing, sets, and exercise notes
+- **Identical Logic**: TypeScript implementation produces the same workout results as Python version
 
-## TODOs and Development Plans
+**Additional Frontend Features:**
+- **Material Design UI**: Clean, modern interface following Google's Material Design principles
+- **Interactive Form Controls**: Duration sliders, multi-select muscle groups, dynamic time allocation
+- **Real-time Validation**: Immediate feedback on input errors and time allocation
+- **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
+- **Beautiful Workout Display**: Collapsible sections, exercise details with video links, summary statistics
+- **Loading States**: Professional loading indicators and error handling
 
-The codebase includes several planned enhancements (`main.py:173-180`):
+## Implementation Status
+
+### ✅ Completed Features
+- **Frontend Interface**: Full Next.js Material-UI implementation completed
+- **TypeScript Port**: Complete functional port of Python workout planner logic
+- **Interactive UI**: Configurable duration, muscle groups, and time allocation
+- **Exercise Display**: Beautiful workout presentation with all exercise details
+- **Responsive Design**: Mobile-friendly Material Design interface
+
+### TODOs and Development Plans
+
+The original codebase includes several planned enhancements (`main.py:173-180`):
 - Split exercises into multiple organized files
-- Add frontend interface for workout customization
+- ~~Add frontend interface for workout customization~~ ✅ **COMPLETED**
 - Implement hierarchical tag system
 - Add exercise progressions and supersets
 - Enhance exercise selection algorithms
@@ -69,9 +113,49 @@ The codebase includes several planned enhancements (`main.py:173-180`):
 
 ## Exercise Database Management
 
-The `exercises.json` file contains a comprehensive exercise library organized by:
-- **Core Family**: Core stability, rotator cuff, scapular stability
-- **Glutes**: Hip thrusts, bridges, lateral movements
+The shared `exercises.json` file contains a comprehensive exercise library with 35+ exercises organized by:
+- **Core Family**: Core stability, rotator cuff, scapular stability (15+ exercises)
+- **Glutes**: Hip thrusts, bridges, lateral movements (13+ exercises)  
 - **General Exercises**: Push-ups, pull-ups, deadlifts
+- **33 Unique Tags**: Including specific muscle groups like "rear delts", "glute medius", "rotator cuff"
 
-Each exercise includes timing parameters and muscle group tags for automated selection during workout generation.
+Each exercise includes timing parameters and muscle group tags for automated selection during workout generation. The same database is used by both Python and TypeScript implementations to ensure consistency.
+
+## Technology Stack
+
+### Frontend
+- **Next.js 15** with TypeScript and App Router
+- **Material-UI (MUI)** for Material Design components
+- **React 18** with modern hooks and state management
+- **ESLint** and **TypeScript** for code quality
+
+### Backend Logic
+- **Python 3** for original implementation
+- **TypeScript** for frontend logic (identical functionality)
+- **JSON** for shared exercise database
+
+## File Structure
+
+```
+/
+├── main.py                          # Original Python workout planner
+├── exercises.json                   # Shared exercise database
+├── CLAUDE.md                       # This documentation file
+└── workout-planner/                # Next.js frontend application
+    ├── src/
+    │   ├── app/
+    │   │   ├── layout.tsx          # Root layout with theme
+    │   │   └── page.tsx            # Main application page
+    │   ├── components/
+    │   │   ├── ThemeProvider.tsx   # MUI theme wrapper
+    │   │   ├── WorkoutPlannerForm.tsx # Input form component
+    │   │   └── WorkoutDisplay.tsx  # Workout results display
+    │   ├── lib/
+    │   │   ├── types.ts            # TypeScript interfaces
+    │   │   ├── theme.ts            # MUI theme configuration
+    │   │   └── workoutPlanner.ts   # Core workout logic
+    │   └── data/
+    │       └── exercises.json      # Copy of exercise database
+    ├── package.json                # Dependencies and scripts
+    └── next.config.mjs            # Next.js configuration
+```

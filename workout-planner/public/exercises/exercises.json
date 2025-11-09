@@ -1,463 +1,343 @@
 {
-	"defaults": {
-		"muscle_groups": [
-			{
-				"muscle_group": "core",
-				"exercises_count": 1,
-				"sets_per_exercise": 3
-			},
-			{
-				"muscle_group": "glutes",
-				"exercises_count": 1,
-				"sets_per_exercise": 3
-			},
-			{
-				"muscle_group": "rear delts",
-				"exercises_count": 1,
-				"sets_per_exercise": 3
-			}
-		]
-	},
-	"exercises": [
-		{
-			"name": "Crunches",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"anterior core"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Reverse Crunches",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"lower abs",
-				"anterior core"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Negative Situps",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"lower abs",
-				"eccentric control"
-			],
-			"notes": "Lower core focus; emphasis on slow negative portion.",
-			"link": null
-		},
-		{
-			"name": "Pallof Press",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"rotary stability",
-				"anti-rotation"
-			],
-			"notes": "Resisting twisting (rotary core).",
-			"link": null
-		},
-		{
-			"name": "Suitcase Carry",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"core",
-				"lateral core",
-				"anti-lateral flexion",
-				"grip"
-			],
-			"notes": "Resisting spinal lateral bending.",
-			"link": null
-		},
-		{
-			"name": "Side/Oblique Crunches",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"obliques"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Bird Dog",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"posterior chain",
-				"scapular stability"
-			],
-			"notes": "Posterior core + scapula stabilisation. Allow no pelvic tilt; keep pelvis locked. Knees raised variation is excellent.",
-			"link": null
-		},
-		{
-			"name": "Dead Bugs",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"anterior core"
-			],
-			"notes": "Preferred over bird dogs by trainer note.",
-			"link": null
-		},
-		{
-			"name": "Bicycle Crunches",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 30,
-			"tags": [
-				"core family",
-				"core",
-				"obliques"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Abdominal Bracing & Breathing (Floor)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 20,
-			"tags": [
-				"core family",
-				"core",
-				"breathing"
-			],
-			"notes": "Focus on sustained brace with nasal breathing.",
-			"link": null
-		},
-		{
-			"name": "Push-Up Plus",
-			"set_duration_sec": 30,
-			"rest_duration_sec": 90,
-			"tags": [
-				"core family",
-				"upper back",
-				"scapular stability",
-				"serratus anterior"
-			],
-			"notes": "Upper back / scapula stabilisation.",
-			"link": null
-		},
-		{
-			"name": "Wall Robots (Wall Slides)",
-			"set_duration_sec": 30,
-			"rest_duration_sec": 90,
-			"tags": [
-				"core family",
-				"upper back",
-				"scapular stability",
-				"rotator cuff"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "I-T-Y-W Raises (Incline)",
-			"set_duration_sec": 30,
-			"rest_duration_sec": 90,
-			"tags": [
-				"core family",
-				"lower traps",
-				"rotator cuff",
-				"scapular stability",
-				"upper back"
-			],
-			"notes": "Perform prone (frontal) and sagittal plane variations; Y at ~45°. Thumbs up to encourage external rotation. Start with 1–2 kg on ~30° incline bench. 'A' variation also possible.",
-			"link": "https://www.youtube.com/watch?v=5ekCSD-E7Q0"
-		},
-		{
-			"name": "I-T-Y-W Raises (Sagittal/Transverse plane)",
-			"set_duration_sec": 30,
-			"rest_duration_sec": 90,
-			"tags": [
-				"core family",
-				"lower traps",
-				"rotator cuff",
-				"scapular stability",
-				"upper back"
-			],
-			"notes": "Short demo of sagittal plane variation.",
-			"link": "https://www.youtube.com/shorts/qUc2jCbZoYg"
-		},
-		{
-			"name": "One-Handed High Plank",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"core",
-				"scapular stability",
-				"shoulders"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Seated Dumbbell External Rotation",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 90,
-			"tags": [
-				"core family",
-				"rotator cuff",
-				"infraspinatus",
-				"teres minor"
-			],
-			"notes": "Rotator cuff / rear delt focus.",
-			"link": "https://www.youtube.com/watch?v=XKCfeJp4Qo0"
-		},
-		{
-			"name": "Prone External Rotation (Elbows Supported)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"rotator cuff",
-				"infraspinatus",
-				"teres minor"
-			],
-			"notes": "Harder without a bench; elbows supported on a block.",
-			"link": null
-		},
-		{
-			"name": "Side-Lying Shoulder External Rotation",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"rotator cuff",
-				"infraspinatus",
-				"teres minor"
-			],
-			"notes": "Likely biases teres minor more; better with externally rotated wrist.",
-			"link": null
-		},
-		{
-			"name": "Seated Rear Delt Fly",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"rear delts",
-				"upper back",
-				"external rotation"
-			],
-			"notes": "Can kneel and hinge forward for added core stability. Focus on external rotation; bench support feels better.",
-			"link": null
-		},
-		{
-			"name": "Rear Delt Row (Wide-Grip)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"rear delts",
-				"upper back"
-			],
-			"notes": "Use lat pulldown attachment; wide grip; elbows ~45°.",
-			"link": null
-		},
-		{
-			"name": "Hip Flexor Stretch",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 20,
-			"tags": [
-				"core family",
-				"mobility",
-				"hip flexors",
-				"glutes"
-			],
-			"notes": "Recommended before glute work.",
-			"link": null
-		},
-		{
-			"name": "Glute Bridge",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 90,
-			"tags": [
-				"glutes",
-				"posterior chain",
-				"core family"
-			],
-			"notes": "Lead with posterior pelvic tilt and drive up from there; keep core braced. Maintain neutral/posterior tilt while breathing.",
-			"link": "https://www.youtube.com/watch?v=FqfYvaRgKyM"
-		},
-		{
-			"name": "Single-Leg Glute Bridge",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 90,
-			"tags": [
-				"glutes",
-				"posterior chain",
-				"core family"
-			],
-			"notes": "Easier to get good glute engagement after soft-tissue work on medial knee area if tight.",
-			"link": null
-		},
-		{
-			"name": "Hip Thrust",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 90,
-			"tags": [
-				"glutes",
-				"posterior chain",
-				"core family"
-			],
-			"notes": "Move feet farther out to bias glutes over quads.",
-			"link": null
-		},
-		{
-			"name": "Single-Leg Hip Thrust",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 90,
-			"tags": [
-				"glutes",
-				"posterior chain",
-				"core family"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Lateral Bunkies (Isometric)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core",
-				"glutes",
-				"glute medius",
-				"obliques"
-			],
-			"notes": "Hold body completely in line; hits many stabilisers.",
-			"link": null
-		},
-		{
-			"name": "Banded step outs",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"glutes",
-				"glute medius"
-			],
-			"notes": "Tap for out to side with band around ankles, just like in the pilates class",
-			"link": "https://www.youtube.com/watch?v=dKluhLck1Zs"
-		},
-		{
-			"name": "Posterior Bunkies (Isometric)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"glutes",
-				"hamstrings",
-				"core family"
-			],
-			"notes": "Posterior tilt cue throughout.",
-			"link": null
-		},
-		{
-			"name": "Copenhagen Plank (potentially with short lever)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"adductors",
-				"glutes"
-			],
-			"notes": "If medial knee pain occurs, use short-lever variation.",
-			"link": null
-		},
-		{
-			"name": "Lateral Bunkies (Bent-Leg on Small Stand)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 120,
-			"tags": [
-				"core family",
-				"glute medius",
-				"glutes",
-				"obliques"
-			],
-			"notes": "Great for targeting glute medius; test knee valgus control.",
-			"link": null
-		},
-		{
-			"name": "Banded Fire Hydrant / Lateral Step-Down",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 60,
-			"tags": [
-				"core family",
-				"glutes",
-				"glute medius",
-				"knee valgus control",
-				"hips"
-			],
-			"notes": "Knee-valgus-specific drill.",
-			"link": "https://www.youtube.com/watch?v=We0UiiuSHIA&t=243s"
-		},
-		{
-			"name": "Deadlift (DB/BB)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 180,
-			"tags": [
-				"core family",
-				"posterior chain",
-				"hamstrings",
-				"glutes",
-				"back"
-			],
-			"notes": "Dumbbells preferred in notes; RDLs also suggested.",
-			"link": null
-		},
-		{
-			"name": "Romanian Deadlift (DB/BB)",
-			"set_duration_sec": 60,
-			"rest_duration_sec": 180,
-			"tags": [
-				"core family",
-				"posterior chain",
-				"hamstrings",
-				"glutes"
-			],
-			"notes": "Focus on hip hinge and hamstring loading.",
-			"link": null
-		},
-		{
-			"name": "Push ups",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 120,
-			"tags": [
-				"chest"
-			],
-			"notes": null,
-			"link": null
-		},
-		{
-			"name": "Pull ups",
-			"set_duration_sec": 90,
-			"rest_duration_sec": 120,
-			"tags": [
-				"back"
-			],
-			"notes": null,
-			"link": null
-		}
-	]
+  "defaults": {
+    "muscle_groups": [
+      {
+        "muscle_group": "core",
+        "exercises_count": 1,
+        "sets_per_exercise": 3
+      },
+      {
+        "muscle_group": "glutes",
+        "exercises_count": 1,
+        "sets_per_exercise": 3
+      },
+      {
+        "muscle_group": "rear delts",
+        "exercises_count": 1,
+        "sets_per_exercise": 3
+      }
+    ]
+  },
+  "exercises": [
+    {
+      "name": "Crunches",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "anterior core"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Reverse Crunches",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "lower abs", "anterior core"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Negative Situps",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "lower abs", "eccentric control"],
+      "notes": "Lower core focus; emphasis on slow negative portion.",
+      "link": null
+    },
+    {
+      "name": "Pallof Press",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "rotary stability", "anti-rotation"],
+      "notes": "Resisting twisting (rotary core).",
+      "link": null
+    },
+    {
+      "name": "Suitcase Carry",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": [
+        "core family",
+        "core",
+        "lateral core",
+        "anti-lateral flexion",
+        "grip"
+      ],
+      "notes": "Resisting spinal lateral bending.",
+      "link": null
+    },
+    {
+      "name": "Side/Oblique Crunches",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "obliques"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Bird Dog",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "posterior chain", "scapular stability"],
+      "notes": "Posterior core + scapula stabilisation. Allow no pelvic tilt; keep pelvis locked. Knees raised variation is excellent.",
+      "link": null
+    },
+    {
+      "name": "Dead Bugs",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "anterior core"],
+      "notes": "Preferred over bird dogs by trainer note.",
+      "link": null
+    },
+    {
+      "name": "Bicycle Crunches",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 30,
+      "tags": ["core family", "core", "obliques"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Abdominal Bracing & Breathing (Floor)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 20,
+      "tags": ["core family", "core", "breathing"],
+      "notes": "Focus on sustained brace with nasal breathing.",
+      "link": null
+    },
+    {
+      "name": "Push-Up Plus",
+      "set_duration_sec": 30,
+      "rest_duration_sec": 90,
+      "tags": [
+        "core family",
+        "upper back",
+        "scapular stability",
+        "serratus anterior"
+      ],
+      "notes": "Upper back / scapula stabilisation.",
+      "link": null
+    },
+    {
+      "name": "Wall Robots (Wall Slides)",
+      "set_duration_sec": 30,
+      "rest_duration_sec": 90,
+      "tags": [
+        "core family",
+        "upper back",
+        "scapular stability",
+        "rotator cuff"
+      ],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "I-T-Y-W Raises (Incline)",
+      "set_duration_sec": 30,
+      "rest_duration_sec": 90,
+      "tags": [
+        "core family",
+        "lower traps",
+        "rotator cuff",
+        "scapular stability",
+        "upper back"
+      ],
+      "notes": "Perform prone (frontal) and sagittal plane variations; Y at ~45°. Thumbs up to encourage external rotation. Start with 1–2 kg on ~30° incline bench. 'A' variation also possible.",
+      "link": "https://www.youtube.com/watch?v=5ekCSD-E7Q0"
+    },
+    {
+      "name": "I-T-Y-W Raises (Sagittal/Transverse plane)",
+      "set_duration_sec": 30,
+      "rest_duration_sec": 90,
+      "tags": [
+        "core family",
+        "lower traps",
+        "rotator cuff",
+        "scapular stability",
+        "upper back"
+      ],
+      "notes": "Short demo of sagittal plane variation.",
+      "link": "https://www.youtube.com/shorts/qUc2jCbZoYg"
+    },
+    {
+      "name": "One-Handed High Plank",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "core", "scapular stability", "shoulders"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Seated Dumbbell External Rotation",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 90,
+      "tags": ["core family", "rotator cuff", "infraspinatus", "teres minor"],
+      "notes": "Rotator cuff / rear delt focus.",
+      "link": "https://www.youtube.com/watch?v=XKCfeJp4Qo0"
+    },
+    {
+      "name": "Prone External Rotation (Elbows Supported)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "rotator cuff", "infraspinatus", "teres minor"],
+      "notes": "Harder without a bench; elbows supported on a block.",
+      "link": null
+    },
+    {
+      "name": "Side-Lying Shoulder External Rotation",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "rotator cuff", "infraspinatus", "teres minor"],
+      "notes": "Likely biases teres minor more; better with externally rotated wrist.",
+      "link": null
+    },
+    {
+      "name": "Seated Rear Delt Fly",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "rear delts", "upper back", "external rotation"],
+      "notes": "Can kneel and hinge forward for added core stability. Focus on external rotation; bench support feels better.",
+      "link": null
+    },
+    {
+      "name": "Rear Delt Row (Wide-Grip)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "rear delts", "upper back"],
+      "notes": "Use lat pulldown attachment; wide grip; elbows ~45°.",
+      "link": null
+    },
+    {
+      "name": "Hip Flexor Stretch",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 20,
+      "tags": ["core family", "mobility", "hip flexors", "glutes"],
+      "notes": "Recommended before glute work.",
+      "link": null
+    },
+    {
+      "name": "Glute Bridge",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 90,
+      "tags": ["glutes", "posterior chain", "core family"],
+      "notes": "Lead with posterior pelvic tilt and drive up from there; keep core braced. Maintain neutral/posterior tilt while breathing.",
+      "link": "https://www.youtube.com/watch?v=FqfYvaRgKyM"
+    },
+    {
+      "name": "Single-Leg Glute Bridge",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 90,
+      "tags": ["glutes", "posterior chain", "core family"],
+      "notes": "Easier to get good glute engagement after soft-tissue work on medial knee area if tight.",
+      "link": null
+    },
+    {
+      "name": "Hip Thrust",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 90,
+      "tags": ["glutes", "posterior chain", "core family"],
+      "notes": "Move feet farther out to bias glutes over quads.",
+      "link": null
+    },
+    {
+      "name": "Single-Leg Hip Thrust",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 90,
+      "tags": ["glutes", "posterior chain", "core family"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Lateral Bunkies (Isometric)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core", "glutes", "glute medius", "obliques"],
+      "notes": "Hold body completely in line; hits many stabilisers.",
+      "link": null
+    },
+    {
+      "name": "Banded step outs",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["glutes", "glute medius"],
+      "notes": "Tap for out to side with band around ankles, just like in the pilates class",
+      "link": "https://www.youtube.com/watch?v=dKluhLck1Zs"
+    },
+    {
+      "name": "Posterior Bunkies (Isometric)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["glutes", "hamstrings", "core family"],
+      "notes": "Posterior tilt cue throughout.",
+      "link": null
+    },
+    {
+      "name": "Copenhagen Plank (potentially with short lever)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "adductors", "glutes"],
+      "notes": "If medial knee pain occurs, use short-lever variation.",
+      "link": null
+    },
+    {
+      "name": "Lateral Bunkies (Bent-Leg on Small Stand)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 120,
+      "tags": ["core family", "glute medius", "glutes", "obliques"],
+      "notes": "Great for targeting glute medius; test knee valgus control.",
+      "link": null
+    },
+    {
+      "name": "Banded Fire Hydrant / Lateral Step-Down",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 60,
+      "tags": [
+        "core family",
+        "glutes",
+        "glute medius",
+        "knee valgus control",
+        "hips"
+      ],
+      "notes": "Knee-valgus-specific drill.",
+      "link": "https://www.youtube.com/watch?v=We0UiiuSHIA&t=243s"
+    },
+    {
+      "name": "Deadlift (DB/BB)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 180,
+      "tags": [
+        "core family",
+        "posterior chain",
+        "hamstrings",
+        "glutes",
+        "back"
+      ],
+      "notes": "Dumbbells preferred in notes; RDLs also suggested.",
+      "link": null
+    },
+    {
+      "name": "Romanian Deadlift (DB/BB)",
+      "set_duration_sec": 60,
+      "rest_duration_sec": 180,
+      "tags": ["core family", "posterior chain", "hamstrings", "glutes"],
+      "notes": "Focus on hip hinge and hamstring loading.",
+      "link": null
+    },
+    {
+      "name": "Push ups",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 120,
+      "tags": ["chest"],
+      "notes": null,
+      "link": null
+    },
+    {
+      "name": "Pull ups",
+      "set_duration_sec": 90,
+      "rest_duration_sec": 120,
+      "tags": ["back"],
+      "notes": null,
+      "link": null
+    }
+  ]
 }

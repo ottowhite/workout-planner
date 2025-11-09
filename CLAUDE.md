@@ -8,7 +8,7 @@ This repository contains both a Python workout planner and a modern Next.js web 
 - Duration preferences (in minutes)
 - Target muscle groups
 - Time allocation per muscle group
-- Exercise database stored in JSON format
+- Exercise database stored in JSON format (supports multiple exercise files)
 
 ## Commands
 
@@ -86,6 +86,7 @@ npm run build  # Production build
 
 **Additional Frontend Features:**
 - **Material Design UI**: Clean, modern interface following Google's Material Design principles
+- **Multiple Exercise Sets**: Dropdown selector to switch between different exercise databases
 - **Interactive Form Controls**: Duration sliders, multi-select muscle groups, dynamic time allocation
 - **Real-time Validation**: Immediate feedback on input errors and time allocation
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
@@ -100,11 +101,12 @@ npm run build  # Production build
 - **Interactive UI**: Configurable duration, muscle groups, and time allocation
 - **Exercise Display**: Beautiful workout presentation with all exercise details
 - **Responsive Design**: Mobile-friendly Material Design interface
+- **Multiple Exercise Files**: Support for multiple exercise databases with dynamic dropdown selector
 
 ### TODOs and Development Plans
 
 The original codebase includes several planned enhancements (`main.py:173-180`):
-- Split exercises into multiple organized files
+- ~~Split exercises into multiple organized files~~ ✅ **COMPLETED**
 - ~~Add frontend interface for workout customization~~ ✅ **COMPLETED**
 - Implement hierarchical tag system
 - Add exercise progressions and supersets
@@ -113,13 +115,28 @@ The original codebase includes several planned enhancements (`main.py:173-180`):
 
 ## Exercise Database Management
 
-The shared `exercises.json` file contains a comprehensive exercise library with 35+ exercises organized by:
+The application now supports multiple exercise database files stored in `workout-planner/public/exercises/`:
+
+**Default Exercise Set (`exercises.json`)**:
+- Comprehensive exercise library with 35+ exercises
 - **Core Family**: Core stability, rotator cuff, scapular stability (15+ exercises)
-- **Glutes**: Hip thrusts, bridges, lateral movements (13+ exercises)  
+- **Glutes**: Hip thrusts, bridges, lateral movements (13+ exercises)
 - **General Exercises**: Push-ups, pull-ups, deadlifts
 - **33 Unique Tags**: Including specific muscle groups like "rear delts", "glute medius", "rotator cuff"
 
-Each exercise includes timing parameters and muscle group tags for automated selection during workout generation. The same database is used by both Python and TypeScript implementations to ensure consistency.
+**Example Alternative Set (`exercises-new.json`)**:
+- Demonstrates multi-file support with 3 basic exercises
+- Shows how to create custom exercise sets
+
+### Adding New Exercise Files
+
+To add a new exercise database:
+1. Create a new JSON file in `workout-planner/public/exercises/` (e.g., `my-exercises.json`)
+2. Follow the standard exercise JSON structure with an `exercises` array
+3. The file will automatically appear in the frontend's exercise set dropdown
+4. File names are automatically formatted (e.g., `exercises-new.json` → "Exercises New")
+
+Each exercise includes timing parameters and muscle group tags for automated selection during workout generation.
 
 ## Technology Stack
 
@@ -139,23 +156,28 @@ Each exercise includes timing parameters and muscle group tags for automated sel
 ```
 /
 ├── main.py                          # Original Python workout planner
-├── exercises.json                   # Shared exercise database
+├── exercises.json                   # Root-level exercise database (for Python)
 ├── CLAUDE.md                       # This documentation file
 └── workout-planner/                # Next.js frontend application
+    ├── public/
+    │   └── exercises/              # Exercise database directory
+    │       ├── exercises.json      # Default exercise set
+    │       └── exercises-new.json  # Example alternative exercise set
     ├── src/
     │   ├── app/
+    │   │   ├── api/
+    │   │   │   └── exercises/
+    │   │   │       └── route.ts    # API endpoint to list exercise files
     │   │   ├── layout.tsx          # Root layout with theme
-    │   │   └── page.tsx            # Main application page
+    │   │   └── page.tsx            # Main application page with multi-file support
     │   ├── components/
     │   │   ├── ThemeProvider.tsx   # MUI theme wrapper
-    │   │   ├── WorkoutPlannerForm.tsx # Input form component
+    │   │   ├── WorkoutPlannerForm.tsx # Input form with exercise set selector
     │   │   └── WorkoutDisplay.tsx  # Workout results display
-    │   ├── lib/
-    │   │   ├── types.ts            # TypeScript interfaces
-    │   │   ├── theme.ts            # MUI theme configuration
-    │   │   └── workoutPlanner.ts   # Core workout logic
-    │   └── data/
-    │       └── exercises.json      # Copy of exercise database
+    │   └── lib/
+    │       ├── types.ts            # TypeScript interfaces
+    │       ├── theme.ts            # MUI theme configuration
+    │       └── workoutPlanner.ts   # Core workout logic
     ├── package.json                # Dependencies and scripts
-    └── next.config.mjs            # Next.js configuration
+    └── next.config.ts              # Next.js configuration
 ```

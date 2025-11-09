@@ -21,18 +21,30 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import FitnessCenter from '@mui/icons-material/FitnessCenter';
 import { WorkoutGenerationParams } from '@/lib/types';
 
+interface ExerciseFile {
+  id: string;
+  name: string;
+  filename: string;
+}
+
 interface WorkoutPlannerFormProps {
   availableMuscleGroups: string[];
   onGenerateWorkout: (params: WorkoutGenerationParams) => void;
   isGenerating?: boolean;
   error?: string | null;
+  exerciseFiles: ExerciseFile[];
+  selectedExerciseFile: string;
+  onExerciseFileChange: (fileId: string) => void;
 }
 
-export default function WorkoutPlannerForm({ 
-  availableMuscleGroups, 
-  onGenerateWorkout, 
+export default function WorkoutPlannerForm({
+  availableMuscleGroups,
+  onGenerateWorkout,
   isGenerating = false,
-  error = null 
+  error = null,
+  exerciseFiles,
+  selectedExerciseFile,
+  onExerciseFileChange
 }: WorkoutPlannerFormProps) {
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState<string[]>(['core', 'glutes', 'rear delts']);
   const [exercisesPerGroup, setExercisesPerGroup] = useState<number>(1);
@@ -43,9 +55,13 @@ export default function WorkoutPlannerForm({
     setSelectedMuscleGroups(value);
   }, []);
 
+  const handleExerciseFileChange = useCallback((event: SelectChangeEvent) => {
+    onExerciseFileChange(event.target.value);
+  }, [onExerciseFileChange]);
+
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (selectedMuscleGroups.length === 0) {
       return;
     }
@@ -69,6 +85,24 @@ export default function WorkoutPlannerForm({
 
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
+            {/* Exercise File Selection */}
+            <Grid size={12}>
+              <FormControl fullWidth>
+                <InputLabel>Exercise Set</InputLabel>
+                <Select
+                  value={selectedExerciseFile}
+                  onChange={handleExerciseFileChange}
+                  label="Exercise Set"
+                >
+                  {exerciseFiles.map((file) => (
+                    <MenuItem key={file.id} value={file.id}>
+                      {file.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
             {/* Muscle Groups */}
             <Grid size={12}>
               <FormControl fullWidth>

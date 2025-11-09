@@ -1,4 +1,23 @@
 {
+	"defaults": {
+		"muscle_groups": [
+			{
+				"muscle_group": "core",
+				"exercises_count": 1,
+				"sets_per_exercise": 3
+			},
+			{
+				"muscle_group": "glutes",
+				"exercises_count": 1,
+				"sets_per_exercise": 3
+			},
+			{
+				"muscle_group": "rear delts",
+				"exercises_count": 1,
+				"sets_per_exercise": 3
+			}
+		]
+	},
 	"exercises": [
 		{
 			"name": "Crunches",

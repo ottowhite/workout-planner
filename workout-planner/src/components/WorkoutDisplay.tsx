@@ -101,10 +101,10 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                     primary={
                       <Box display="flex" alignItems="center" gap={1} mb={1}>
                         <Typography variant="h6">{exercise.name}</Typography>
-                        <Chip 
-                          label={exercise.muscle_group.toUpperCase()} 
-                          size="small" 
-                          color="primary" 
+                        <Chip
+                          label={exercise.muscle_group.toUpperCase()}
+                          size="small"
+                          color="primary"
                           variant="outlined"
                         />
                       </Box>
@@ -112,8 +112,8 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                     secondary={
                       <Box>
                         <Typography variant="body2" color="text.primary" gutterBottom>
-                          <strong>Sets:</strong> {exercise.sets} | 
-                          <strong> Work:</strong> {exercise.set_duration_sec}s | 
+                          <strong>Sets:</strong> {exercise.sets} |
+                          <strong> Work:</strong> {exercise.set_duration_sec}s |
                           <strong> Rest:</strong> {exercise.rest_duration_sec}s
                         </Typography>
                         {exercise.notes && (
@@ -124,9 +124,9 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                         {exercise.link && (
                           <Box display="flex" alignItems="center" gap={0.5}>
                             <PlayCircleOutline fontSize="small" color="primary" />
-                            <Link 
-                              href={exercise.link} 
-                              target="_blank" 
+                            <Link
+                              href={exercise.link}
+                              target="_blank"
                               rel="noopener noreferrer"
                               color="primary"
                             >
@@ -136,6 +136,8 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                         )}
                       </Box>
                     }
+                    primaryTypographyProps={{ component: 'div' }}
+                    secondaryTypographyProps={{ component: 'div' }}
                   />
                 </ListItem>
                 {index < workout.exercises.length - 1 && <Divider />}

@@ -20,11 +20,20 @@ export default function Home() {
   const [exerciseFiles, setExerciseFiles] = useState<ExerciseFile[]>([]);
   const [selectedExerciseFile, setSelectedExerciseFile] = useState<string>('exercises');
   const [exerciseData, setExerciseData] = useState<ExerciseDatabase | null>(null);
-  const [isLoadingFiles, setIsLoadingFiles] = useState(true);
+  const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Handle mounting to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fetch available exercise files
   useEffect(() => {
+    if (!isMounted) return;
+
     const fetchExerciseFiles = async () => {
+      setIsLoadingFiles(true);
       try {
         const response = await fetch('/api/exercises');
         const files = await response.json();
@@ -42,7 +51,7 @@ export default function Home() {
 
     fetchExerciseFiles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isMounted]);
 
   // Load selected exercise file
   useEffect(() => {
@@ -97,16 +106,6 @@ export default function Home() {
     }
   };
 
-  if (isLoadingFiles) {
-    return (
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-          <CircularProgress />
-        </Box>
-      </Container>
-    );
-  }
-
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box textAlign="center" mb={4}>
@@ -118,30 +117,38 @@ export default function Home() {
         </Typography>
       </Box>
 
-      <Box mb={4}>
-        <WorkoutPlannerForm
-          availableMuscleGroups={availableMuscleGroups}
-          onGenerateWorkout={handleGenerateWorkout}
-          isGenerating={isGenerating}
-          error={error}
-          exerciseFiles={exerciseFiles}
-          selectedExerciseFile={selectedExerciseFile}
-          onExerciseFileChange={setSelectedExerciseFile}
-        />
-      </Box>
-
-      {workout && (
-        <Box>
-          <WorkoutDisplay workout={workout} />
+      {isLoadingFiles ? (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="30vh">
+          <CircularProgress />
         </Box>
-      )}
+      ) : (
+        <>
+          <Box mb={4}>
+            <WorkoutPlannerForm
+              availableMuscleGroups={availableMuscleGroups}
+              onGenerateWorkout={handleGenerateWorkout}
+              isGenerating={isGenerating}
+              error={error}
+              exerciseFiles={exerciseFiles}
+              selectedExerciseFile={selectedExerciseFile}
+              onExerciseFileChange={setSelectedExerciseFile}
+            />
+          </Box>
 
-      {!workout && !isGenerating && (
-        <Box textAlign="center" mt={6}>
-          <Typography variant="body1" color="text.secondary">
-            Configure your preferences above and click &quot;Generate Workout&quot; to create your personalized routine!
-          </Typography>
-        </Box>
+          {workout && (
+            <Box>
+              <WorkoutDisplay workout={workout} />
+            </Box>
+          )}
+
+          {!workout && !isGenerating && (
+            <Box textAlign="center" mt={6}>
+              <Typography variant="body1" color="text.secondary">
+                Configure your preferences above and click &quot;Generate Workout&quot; to create your personalized routine!
+              </Typography>
+            </Box>
+          )}
+        </>
       )}
     </Container>
   );

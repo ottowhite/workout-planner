@@ -23,7 +23,6 @@ import {
   FitnessCenter,
   ExpandMore,
   PlayCircleOutline,
-  SelfImprovement,
 } from '@mui/icons-material';
 import { Workout } from '@/lib/types';
 
@@ -144,32 +143,6 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
               </React.Fragment>
             ))}
           </List>
-        </AccordionDetails>
-      </Accordion>
-
-      {/* Summary */}
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Box display="flex" alignItems="center" gap={1}>
-            <SelfImprovement color="secondary" />
-            <Typography variant="h6">Muscle Group Breakdown</Typography>
-          </Box>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            {Object.entries(workout.summary.muscle_group_breakdown).map(([group, exerciseCount]) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={group}>
-                <Paper sx={{ p: 2, textAlign: 'center' }}>
-                  <Typography variant="h6" color="primary" sx={{ textTransform: 'capitalize' }}>
-                    {group}
-                  </Typography>
-                  <Typography variant="body1">
-                    {exerciseCount} exercise{exerciseCount !== 1 ? 's' : ''}
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
         </AccordionDetails>
       </Accordion>
     </Box>

@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import { WorkoutPlanner } from '@/lib/workoutPlanner';
-import { Workout, WorkoutGenerationParams, ExerciseDatabase } from '@/lib/types';
+import { Workout, WorkoutGenerationParams, ExerciseDatabase, AppConfig } from '@/lib/types';
 import WorkoutPlannerForm from '@/components/WorkoutPlannerForm';
 import WorkoutDisplay from '@/components/WorkoutDisplay';
 
@@ -18,7 +18,7 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exerciseFiles, setExerciseFiles] = useState<ExerciseFile[]>([]);
-  const [selectedExerciseFile, setSelectedExerciseFile] = useState<string>('exercises');
+  const [selectedExerciseFile, setSelectedExerciseFile] = useState<string>('');
   const [exerciseData, setExerciseData] = useState<ExerciseDatabase | null>(null);
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +27,26 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Load config to determine default exercise set
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const loadConfig = async () => {
+      try {
+        const response = await fetch('/config.json');
+        const config = await response.json() as AppConfig;
+        if (config.default_exercise_set) {
+          setSelectedExerciseFile(config.default_exercise_set);
+        }
+      } catch (err) {
+        console.error('Failed to load config, using fallback default:', err);
+        setSelectedExerciseFile('exercises');
+      }
+    };
+
+    loadConfig();
+  }, [isMounted]);
 
   // Fetch available exercise files
   useEffect(() => {

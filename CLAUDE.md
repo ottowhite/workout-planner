@@ -113,6 +113,22 @@ The original codebase includes several planned enhancements (`main.py:173-180`):
 - Enhance exercise selection algorithms
 - Support for specific exercise preferences
 
+## Application Configuration
+
+The application uses a configuration file to control default behavior:
+
+**Configuration File (`workout-planner/public/config.json`)**:
+```json
+{
+  "default_exercise_set": "exercises"
+}
+```
+
+- `default_exercise_set`: Specifies which exercise set is selected by default when the app loads
+- Valid values: Any exercise set filename without the `.json` extension (e.g., "exercises", "exercises-new")
+- The app will load this config on startup and select the specified exercise set
+- If the config file cannot be loaded, falls back to "exercises" as the default
+
 ## Exercise Database Management
 
 The application now supports multiple exercise database files stored in `workout-planner/public/exercises/`:
@@ -160,6 +176,7 @@ Each exercise includes timing parameters and muscle group tags for automated sel
 ├── CLAUDE.md                       # This documentation file
 └── workout-planner/                # Next.js frontend application
     ├── public/
+    │   ├── config.json             # Application configuration (default exercise set)
     │   └── exercises/              # Exercise database directory
     │       ├── exercises.json      # Default exercise set
     │       └── exercises-new.json  # Example alternative exercise set

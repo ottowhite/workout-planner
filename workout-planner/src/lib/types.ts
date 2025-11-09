@@ -51,3 +51,7 @@ export interface ExerciseDatabase {
 export interface WorkoutGenerationParams {
   muscle_group_configs: MuscleGroupConfig[];
 }
+
+export interface AppConfig {
+  default_exercise_set: string;
+}

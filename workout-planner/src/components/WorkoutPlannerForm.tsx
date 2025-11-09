@@ -11,15 +11,16 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Chip,
-  Slider,
   Grid,
   Alert,
   CircularProgress,
+  IconButton,
+  Paper,
+  TextField,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import FitnessCenter from '@mui/icons-material/FitnessCenter';
-import { WorkoutGenerationParams } from '@/lib/types';
+import { FitnessCenter, Add, Delete } from '@mui/icons-material';
+import { WorkoutGenerationParams, MuscleGroupConfig } from '@/lib/types';
 
 interface ExerciseFile {
   id: string;
@@ -46,32 +47,57 @@ export default function WorkoutPlannerForm({
   selectedExerciseFile,
   onExerciseFileChange
 }: WorkoutPlannerFormProps) {
-  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState<string[]>(['core', 'glutes', 'rear delts']);
-  const [exercisesPerGroup, setExercisesPerGroup] = useState<number>(1);
-  const [setsPerExercise, setSetsPerExercise] = useState<number>(3);
-
-  const handleMuscleGroupChange = useCallback((event: SelectChangeEvent<string[]>) => {
-    const value = event.target.value as string[];
-    setSelectedMuscleGroups(value);
-  }, []);
+  const [muscleGroupConfigs, setMuscleGroupConfigs] = useState<MuscleGroupConfig[]>([
+    { id: '1', muscle_group: 'core', exercises_count: 1, sets_per_exercise: 3 },
+    { id: '2', muscle_group: 'glutes', exercises_count: 1, sets_per_exercise: 3 },
+    { id: '3', muscle_group: 'rear delts', exercises_count: 1, sets_per_exercise: 3 },
+  ]);
 
   const handleExerciseFileChange = useCallback((event: SelectChangeEvent) => {
     onExerciseFileChange(event.target.value);
   }, [onExerciseFileChange]);
 
+  const handleAddMuscleGroup = useCallback(() => {
+    const newId = Date.now().toString();
+    setMuscleGroupConfigs(prev => [
+      ...prev,
+      { id: newId, muscle_group: availableMuscleGroups[0] || '', exercises_count: 1, sets_per_exercise: 3 }
+    ]);
+  }, [availableMuscleGroups]);
+
+  const handleRemoveMuscleGroup = useCallback((id: string) => {
+    setMuscleGroupConfigs(prev => prev.filter(config => config.id !== id));
+  }, []);
+
+  const handleMuscleGroupChange = useCallback((id: string, value: string) => {
+    setMuscleGroupConfigs(prev =>
+      prev.map(config => config.id === id ? { ...config, muscle_group: value } : config)
+    );
+  }, []);
+
+  const handleExercisesCountChange = useCallback((id: string, value: number) => {
+    setMuscleGroupConfigs(prev =>
+      prev.map(config => config.id === id ? { ...config, exercises_count: value } : config)
+    );
+  }, []);
+
+  const handleSetsChange = useCallback((id: string, value: number) => {
+    setMuscleGroupConfigs(prev =>
+      prev.map(config => config.id === id ? { ...config, sets_per_exercise: value } : config)
+    );
+  }, []);
+
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedMuscleGroups.length === 0) {
+    if (muscleGroupConfigs.length === 0) {
       return;
     }
 
     onGenerateWorkout({
-      muscle_groups: selectedMuscleGroups,
-      exercises_per_group: exercisesPerGroup,
-      sets_per_exercise: setsPerExercise
+      muscle_group_configs: muscleGroupConfigs
     });
-  }, [selectedMuscleGroups, exercisesPerGroup, setsPerExercise, onGenerateWorkout]);
+  }, [muscleGroupConfigs, onGenerateWorkout]);
 
   return (
     <Card elevation={2}>
@@ -103,74 +129,85 @@ export default function WorkoutPlannerForm({
               </FormControl>
             </Grid>
 
-            {/* Muscle Groups */}
+            {/* Muscle Group Configurations */}
             <Grid size={12}>
-              <FormControl fullWidth>
-                <InputLabel>Muscle Groups</InputLabel>
-                <Select
-                  multiple
-                  value={selectedMuscleGroups}
-                  onChange={handleMuscleGroupChange}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} size="small" />
-                      ))}
-                    </Box>
-                  )}
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6">Muscle Groups</Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<Add />}
+                  onClick={handleAddMuscleGroup}
+                  disabled={isGenerating}
                 >
-                  {availableMuscleGroups.map((group) => (
-                    <MenuItem key={group} value={group}>
-                      {group}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+                  Add Muscle Group
+                </Button>
+              </Box>
 
-            {/* Exercises per Muscle Group */}
-            <Grid size={12}>
-              <Typography variant="h6" gutterBottom>
-                Exercises per Muscle Group: {exercisesPerGroup}
-              </Typography>
-              <Slider
-                value={exercisesPerGroup}
-                onChange={(_, value) => setExercisesPerGroup(value as number)}
-                min={1}
-                max={5}
-                step={1}
-                marks={[
-                  { value: 1, label: '1' },
-                  { value: 2, label: '2' },
-                  { value: 3, label: '3' },
-                  { value: 4, label: '4' },
-                  { value: 5, label: '5' }
-                ]}
-                sx={{ mt: 1 }}
-              />
-            </Grid>
+              {muscleGroupConfigs.map((config) => (
+                <Paper key={config.id} elevation={1} sx={{ p: 2, mb: 2 }}>
+                  <Grid container spacing={2} alignItems="center">
+                    {/* Muscle Group Dropdown */}
+                    <Grid size={{ xs: 12, sm: 4 }}>
+                      <FormControl fullWidth size="small">
+                        <InputLabel>Muscle Group</InputLabel>
+                        <Select
+                          value={config.muscle_group}
+                          onChange={(e) => handleMuscleGroupChange(config.id, e.target.value)}
+                          label="Muscle Group"
+                          disabled={isGenerating}
+                        >
+                          {availableMuscleGroups.map((group) => (
+                            <MenuItem key={group} value={group}>
+                              {group}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
 
-            {/* Sets per Exercise */}
-            <Grid size={12}>
-              <Typography variant="h6" gutterBottom>
-                Sets per Exercise: {setsPerExercise}
-              </Typography>
-              <Slider
-                value={setsPerExercise}
-                onChange={(_, value) => setSetsPerExercise(value as number)}
-                min={1}
-                max={6}
-                step={1}
-                marks={[
-                  { value: 1, label: '1' },
-                  { value: 2, label: '2' },
-                  { value: 3, label: '3' },
-                  { value: 4, label: '4' },
-                  { value: 5, label: '5' },
-                  { value: 6, label: '6' }
-                ]}
-                sx={{ mt: 1 }}
-              />
+                    {/* Exercises Count */}
+                    <Grid size={{ xs: 5, sm: 3 }}>
+                      <TextField
+                        label="Exercises"
+                        type="number"
+                        size="small"
+                        fullWidth
+                        value={config.exercises_count}
+                        onChange={(e) => handleExercisesCountChange(config.id, Math.max(1, parseInt(e.target.value) || 1))}
+                        inputProps={{ min: 1, max: 10 }}
+                        disabled={isGenerating}
+                      />
+                    </Grid>
+
+                    {/* Sets Count */}
+                    <Grid size={{ xs: 5, sm: 3 }}>
+                      <TextField
+                        label="Sets"
+                        type="number"
+                        size="small"
+                        fullWidth
+                        value={config.sets_per_exercise}
+                        onChange={(e) => handleSetsChange(config.id, Math.max(1, parseInt(e.target.value) || 1))}
+                        inputProps={{ min: 1, max: 10 }}
+                        disabled={isGenerating}
+                      />
+                    </Grid>
+
+                    {/* Remove Button */}
+                    <Grid size={{ xs: 2, sm: 2 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <IconButton
+                        color="error"
+                        onClick={() => handleRemoveMuscleGroup(config.id)}
+                        disabled={muscleGroupConfigs.length === 1 || isGenerating}
+                        aria-label="remove muscle group"
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              ))}
             </Grid>
 
             {error && (
@@ -186,7 +223,7 @@ export default function WorkoutPlannerForm({
                 variant="contained"
                 size="large"
                 fullWidth
-                disabled={selectedMuscleGroups.length === 0 || isGenerating}
+                disabled={muscleGroupConfigs.length === 0 || isGenerating}
                 startIcon={isGenerating ? <CircularProgress size={20} /> : <FitnessCenter />}
                 sx={{ mt: 2 }}
               >

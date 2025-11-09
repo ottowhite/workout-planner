@@ -8,7 +8,7 @@ export class WorkoutPlanner {
   }
 
   generateWorkout(params: WorkoutGenerationParams): Workout {
-    const { muscle_groups, exercises_per_group, sets_per_exercise } = params;
+    const { muscle_group_configs } = params;
 
     const workout: Workout = {
       exercises: [],
@@ -19,9 +19,13 @@ export class WorkoutPlanner {
       }
     };
 
-    // Generate exercises for each muscle group
-    for (const muscleGroup of muscle_groups) {
-      const groupExercises = this.selectExercisesForGroup(muscleGroup, exercises_per_group, sets_per_exercise);
+    // Generate exercises for each muscle group configuration
+    for (const config of muscle_group_configs) {
+      const groupExercises = this.selectExercisesForGroup(
+        config.muscle_group,
+        config.exercises_count,
+        config.sets_per_exercise
+      );
       workout.exercises.push(...groupExercises);
     }
 

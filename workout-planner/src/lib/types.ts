@@ -32,8 +32,13 @@ export interface ExerciseDatabase {
   exercises: Exercise[];
 }
 
-export interface WorkoutGenerationParams {
-  muscle_groups: string[];
-  exercises_per_group: number;
+export interface MuscleGroupConfig {
+  id: string;
+  muscle_group: string;
+  exercises_count: number;
   sets_per_exercise: number;
+}
+
+export interface WorkoutGenerationParams {
+  muscle_group_configs: MuscleGroupConfig[];
 }

@@ -28,15 +28,24 @@ export interface Workout {
   summary: WorkoutSummary;
 }
 
-export interface ExerciseDatabase {
-  exercises: Exercise[];
-}
-
 export interface MuscleGroupConfig {
   id: string;
   muscle_group: string;
   exercises_count: number;
   sets_per_exercise: number;
+}
+
+export interface ExerciseDatabaseDefaults {
+  muscle_groups: Array<{
+    muscle_group: string;
+    exercises_count: number;
+    sets_per_exercise: number;
+  }>;
+}
+
+export interface ExerciseDatabase {
+  exercises: Exercise[];
+  defaults?: ExerciseDatabaseDefaults;
 }
 
 export interface WorkoutGenerationParams {

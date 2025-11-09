@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { FitnessCenter, Add, Delete } from '@mui/icons-material';
-import { WorkoutGenerationParams, MuscleGroupConfig } from '@/lib/types';
+import { WorkoutGenerationParams, MuscleGroupConfig, ExerciseDatabaseDefaults } from '@/lib/types';
 
 interface ExerciseFile {
   id: string;
@@ -36,6 +36,7 @@ interface WorkoutPlannerFormProps {
   exerciseFiles: ExerciseFile[];
   selectedExerciseFile: string;
   onExerciseFileChange: (fileId: string) => void;
+  exerciseDefaults?: ExerciseDatabaseDefaults;
 }
 
 export default function WorkoutPlannerForm({
@@ -45,13 +46,27 @@ export default function WorkoutPlannerForm({
   error = null,
   exerciseFiles,
   selectedExerciseFile,
-  onExerciseFileChange
+  onExerciseFileChange,
+  exerciseDefaults
 }: WorkoutPlannerFormProps) {
   const [muscleGroupConfigs, setMuscleGroupConfigs] = useState<MuscleGroupConfig[]>([
     { id: '1', muscle_group: 'core', exercises_count: 1, sets_per_exercise: 3 },
     { id: '2', muscle_group: 'glutes', exercises_count: 1, sets_per_exercise: 3 },
     { id: '3', muscle_group: 'rear delts', exercises_count: 1, sets_per_exercise: 3 },
   ]);
+
+  // Load defaults from exercise database when they change
+  useEffect(() => {
+    if (exerciseDefaults?.muscle_groups && exerciseDefaults.muscle_groups.length > 0) {
+      const defaultConfigs = exerciseDefaults.muscle_groups.map((group, index) => ({
+        id: `default-${index}`,
+        muscle_group: group.muscle_group,
+        exercises_count: group.exercises_count,
+        sets_per_exercise: group.sets_per_exercise
+      }));
+      setMuscleGroupConfigs(defaultConfigs);
+    }
+  }, [exerciseDefaults]);
 
   const handleExerciseFileChange = useCallback((event: SelectChangeEvent) => {
     onExerciseFileChange(event.target.value);

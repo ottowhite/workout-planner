@@ -132,6 +132,7 @@ export default function Home() {
               exerciseFiles={exerciseFiles}
               selectedExerciseFile={selectedExerciseFile}
               onExerciseFileChange={setSelectedExerciseFile}
+              exerciseDefaults={exerciseData?.defaults}
             />
           </Box>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Container, Typography, Box, CircularProgress, Snackbar, Alert } from '@mui/material';
+import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import { WorkoutPlanner } from '@/lib/workoutPlanner';
 import { Workout, WorkoutGenerationParams, ExerciseDatabase, AppConfig } from '@/lib/types';
 import WorkoutPlannerForm from '@/components/WorkoutPlannerForm';
@@ -23,34 +23,12 @@ export default function Home() {
   const [exerciseData, setExerciseData] = useState<ExerciseDatabase | null>(null);
   const [isLoadingPlans, setIsLoadingPlans] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [dbStatus, setDbStatus] = useState<string | null>(null);
-  const [showDbNotification, setShowDbNotification] = useState(false);
   const [availableMuscleGroups, setAvailableMuscleGroups] = useState<string[]>([]);
 
   // Handle mounting to avoid hydration mismatch
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  // Check database connection on mount
-  useEffect(() => {
-    if (!isMounted) return;
-
-    const checkDatabase = async () => {
-      try {
-        const response = await fetch('/api/db-status');
-        const data = await response.json();
-        setDbStatus(data.status);
-        setShowDbNotification(true);
-      } catch (error) {
-        console.error('Database connection check failed:', error);
-        setDbStatus('Database connection check failed');
-        setShowDbNotification(true);
-      }
-    };
-
-    checkDatabase();
-  }, [isMounted]);
 
   // Load config to determine default plan
   useEffect(() => {
@@ -222,21 +200,6 @@ export default function Home() {
         </>
       )}
 
-      {/* Database Connection Status Notification */}
-      <Snackbar
-        open={showDbNotification}
-        autoHideDuration={6000}
-        onClose={() => setShowDbNotification(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={() => setShowDbNotification(false)}
-          severity={dbStatus === 'Database connected' ? 'success' : 'warning'}
-          variant="filled"
-        >
-          {dbStatus}
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }

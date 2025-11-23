@@ -13,6 +13,7 @@ export interface ExerciseBlock {
   set_duration_sec: number;
   rest_duration_sec: number;
   muscle_group: string;
+  tags: string[];
   notes: string;
   link: string;
 }

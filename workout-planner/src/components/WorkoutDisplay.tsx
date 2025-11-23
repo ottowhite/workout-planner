@@ -98,23 +98,21 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                 <ListItem alignItems="flex-start">
                   <ListItemText
                     primary={
-                      <Box display="flex" alignItems="center" gap={1} mb={1}>
+                      <Box display="flex" alignItems="center" gap={1} mb={1} flexWrap="wrap">
                         <Typography variant="h6">{exercise.name}</Typography>
-                        <Chip
-                          label={exercise.muscle_group.toUpperCase()}
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        />
+                        {exercise.tags.map((tag, tagIndex) => (
+                          <Chip
+                            key={tagIndex}
+                            label={tag.toUpperCase()}
+                            size="small"
+                            color="primary"
+                            variant="outlined"
+                          />
+                        ))}
                       </Box>
                     }
                     secondary={
                       <Box>
-                        <Typography variant="body2" color="text.primary" gutterBottom>
-                          <strong>Sets:</strong> {exercise.sets} |
-                          <strong> Work:</strong> {exercise.set_duration_sec}s |
-                          <strong> Rest:</strong> {exercise.rest_duration_sec}s
-                        </Typography>
                         {exercise.notes && (
                           <Typography variant="body2" color="text.secondary" gutterBottom>
                             <strong>Notes:</strong> {exercise.notes}

@@ -68,6 +68,7 @@ export class WorkoutPlanner {
         set_duration_sec: exercise.set_duration_sec,
         rest_duration_sec: exercise.rest_duration_sec,
         muscle_group: muscleGroup,
+        tags: exercise.tags,
         notes: exercise.notes || "",
         link: exercise.link || ""
       };

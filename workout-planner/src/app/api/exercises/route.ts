@@ -1,26 +1,20 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { getAllPlanNames } from '../../db';
 
 export async function GET() {
   try {
-    const exercisesDir = path.join(process.cwd(), 'public', 'exercises');
-    const files = fs.readdirSync(exercisesDir);
+    const planNames = await getAllPlanNames();
 
-    // Filter for JSON files only
-    const jsonFiles = files
-      .filter(file => file.endsWith('.json'))
-      .map(file => ({
-        id: file.replace('.json', ''),
-        name: file.replace('.json', '').split('-').map(word =>
-          word.charAt(0).toUpperCase() + word.slice(1)
-        ).join(' '),
-        filename: file
-      }));
+    // Convert plan names to the format expected by the frontend
+    const plans = planNames.map(name => ({
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name: name,
+      filename: name.toLowerCase().replace(/\s+/g, '-') + '.json'
+    }));
 
-    return NextResponse.json(jsonFiles);
+    return NextResponse.json(plans);
   } catch (error) {
-    console.error('Error reading exercise files:', error);
-    return NextResponse.json({ error: 'Failed to load exercise files' }, { status: 500 });
+    console.error('Error fetching plans from database:', error);
+    return NextResponse.json({ error: 'Failed to load plans' }, { status: 500 });
   }
 }

@@ -22,7 +22,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { FitnessCenter, Add, Delete } from '@mui/icons-material';
 import { WorkoutGenerationParams, MuscleGroupConfig, ExerciseDatabaseDefaults } from '@/lib/types';
 
-interface ExerciseFile {
+interface Plan {
   id: string;
   name: string;
   filename: string;
@@ -33,9 +33,9 @@ interface WorkoutPlannerFormProps {
   onGenerateWorkout: (params: WorkoutGenerationParams) => void;
   isGenerating?: boolean;
   error?: string | null;
-  exerciseFiles: ExerciseFile[];
-  selectedExerciseFile: string;
-  onExerciseFileChange: (fileId: string) => void;
+  plans: Plan[];
+  selectedPlan: string;
+  onPlanChange: (planId: string) => void;
   exerciseDefaults?: ExerciseDatabaseDefaults;
 }
 
@@ -44,19 +44,23 @@ export default function WorkoutPlannerForm({
   onGenerateWorkout,
   isGenerating = false,
   error = null,
-  exerciseFiles,
-  selectedExerciseFile,
-  onExerciseFileChange,
+  plans,
+  selectedPlan,
+  onPlanChange,
   exerciseDefaults
 }: WorkoutPlannerFormProps) {
-  const [muscleGroupConfigs, setMuscleGroupConfigs] = useState<MuscleGroupConfig[]>([
-    { id: '1', muscle_group: 'core', exercises_count: 1, sets_per_exercise: 3 },
-    { id: '2', muscle_group: 'glutes', exercises_count: 1, sets_per_exercise: 3 },
-    { id: '3', muscle_group: 'rear delts', exercises_count: 1, sets_per_exercise: 3 },
-  ]);
+  console.log('WorkoutPlannerForm - availableMuscleGroups:', availableMuscleGroups);
+  console.log('WorkoutPlannerForm - exerciseDefaults:', exerciseDefaults);
+
+  const [muscleGroupConfigs, setMuscleGroupConfigs] = useState<MuscleGroupConfig[]>([]);
 
   // Load defaults from exercise database when they change
   useEffect(() => {
+    // Only initialize if we have available muscle groups
+    if (availableMuscleGroups.length === 0) {
+      return;
+    }
+
     if (exerciseDefaults?.muscle_groups && exerciseDefaults.muscle_groups.length > 0) {
       const defaultConfigs = exerciseDefaults.muscle_groups.map((group, index) => ({
         id: `default-${index}`,
@@ -65,12 +69,17 @@ export default function WorkoutPlannerForm({
         sets_per_exercise: group.sets_per_exercise
       }));
       setMuscleGroupConfigs(defaultConfigs);
+    } else if (muscleGroupConfigs.length === 0) {
+      // Initialize with first available muscle group if no defaults
+      setMuscleGroupConfigs([
+        { id: '1', muscle_group: availableMuscleGroups[0], exercises_count: 1, sets_per_exercise: 3 }
+      ]);
     }
-  }, [exerciseDefaults]);
+  }, [exerciseDefaults, availableMuscleGroups]);
 
-  const handleExerciseFileChange = useCallback((event: SelectChangeEvent) => {
-    onExerciseFileChange(event.target.value);
-  }, [onExerciseFileChange]);
+  const handlePlanChange = useCallback((event: SelectChangeEvent) => {
+    onPlanChange(event.target.value);
+  }, [onPlanChange]);
 
   const handleAddMuscleGroup = useCallback(() => {
     const newId = Date.now().toString();
@@ -126,18 +135,18 @@ export default function WorkoutPlannerForm({
 
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            {/* Exercise File Selection */}
+            {/* Plan Selection */}
             <Grid size={12}>
               <FormControl fullWidth>
-                <InputLabel>Exercise Set</InputLabel>
+                <InputLabel>Workout Plan</InputLabel>
                 <Select
-                  value={selectedExerciseFile}
-                  onChange={handleExerciseFileChange}
-                  label="Exercise Set"
+                  value={selectedPlan}
+                  onChange={handlePlanChange}
+                  label="Workout Plan"
                 >
-                  {exerciseFiles.map((file) => (
-                    <MenuItem key={file.id} value={file.id}>
-                      {file.name}
+                  {plans.map((plan) => (
+                    <MenuItem key={plan.id} value={plan.id}>
+                      {plan.name}
                     </MenuItem>
                   ))}
                 </Select>

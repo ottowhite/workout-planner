@@ -8,7 +8,7 @@ import WorkoutPlannerForm from '@/components/WorkoutPlannerForm';
 import WorkoutDisplay from '@/components/WorkoutDisplay';
 // Database connection check moved to API route
 
-interface ExerciseFile {
+interface Plan {
   id: string;
   name: string;
   filename: string;
@@ -18,13 +18,14 @@ export default function Home() {
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [exerciseFiles, setExerciseFiles] = useState<ExerciseFile[]>([]);
-  const [selectedExerciseFile, setSelectedExerciseFile] = useState<string>('');
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<string>('');
   const [exerciseData, setExerciseData] = useState<ExerciseDatabase | null>(null);
-  const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [isLoadingPlans, setIsLoadingPlans] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [dbStatus, setDbStatus] = useState<string | null>(null);
   const [showDbNotification, setShowDbNotification] = useState(false);
+  const [availableMuscleGroups, setAvailableMuscleGroups] = useState<string[]>([]);
 
   // Handle mounting to avoid hydration mismatch
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function Home() {
     checkDatabase();
   }, [isMounted]);
 
-  // Load config to determine default exercise set
+  // Load config to determine default plan
   useEffect(() => {
     if (!isMounted) return;
 
@@ -60,73 +61,88 @@ export default function Home() {
         const response = await fetch('/config.json');
         const config = await response.json() as AppConfig;
         if (config.default_exercise_set) {
-          setSelectedExerciseFile(config.default_exercise_set);
+          setSelectedPlan(config.default_exercise_set);
         }
       } catch (err) {
         console.error('Failed to load config, using fallback default:', err);
-        setSelectedExerciseFile('exercises');
+        setSelectedPlan('exercises');
       }
     };
 
     loadConfig();
   }, [isMounted]);
 
-  // Fetch available exercise files
+  // Fetch available plans
   useEffect(() => {
     if (!isMounted) return;
 
-    const fetchExerciseFiles = async () => {
-      setIsLoadingFiles(true);
+    const fetchPlans = async () => {
+      setIsLoadingPlans(true);
       try {
         const response = await fetch('/api/exercises');
-        const files = await response.json();
-        setExerciseFiles(files);
-        if (files.length > 0 && !selectedExerciseFile) {
-          setSelectedExerciseFile(files[0].id);
+        const planList = await response.json();
+        setPlans(planList);
+        if (planList.length > 0 && !selectedPlan) {
+          setSelectedPlan(planList[0].id);
         }
       } catch (err) {
-        console.error('Failed to load exercise files:', err);
-        setError('Failed to load exercise files');
+        console.error('Failed to load plans:', err);
+        setError('Failed to load plans');
       } finally {
-        setIsLoadingFiles(false);
+        setIsLoadingPlans(false);
       }
     };
 
-    fetchExerciseFiles();
+    fetchPlans();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
-  // Load selected exercise file
+  // Load selected plan data
   useEffect(() => {
-    const loadExerciseData = async () => {
-      if (!selectedExerciseFile) return;
+    const loadPlanData = async () => {
+      if (!selectedPlan) {
+        console.log('No plan selected yet');
+        return;
+      }
+
+      console.log('Loading plan:', selectedPlan);
 
       try {
-        const response = await fetch(`/exercises/${selectedExerciseFile}.json`);
-        const data = await response.json();
+        const [dataResponse, tagsResponse] = await Promise.all([
+          fetch(`/api/plans/${selectedPlan}`),
+          fetch(`/api/plans/${selectedPlan}/tags`)
+        ]);
+
+        console.log('Data response status:', dataResponse.status);
+        console.log('Tags response status:', tagsResponse.status);
+
+        if (!dataResponse.ok || !tagsResponse.ok) {
+          throw new Error(`Failed to fetch: data=${dataResponse.status}, tags=${tagsResponse.status}`);
+        }
+
+        const data = await dataResponse.json();
+        const tags = await tagsResponse.json();
+
+        console.log('Loaded plan data:', data);
+        console.log('Loaded tags:', tags);
+        console.log('Tags is array?', Array.isArray(tags));
+        console.log('Tags length:', tags?.length);
+
         setExerciseData(data as ExerciseDatabase);
-        setWorkout(null); // Clear current workout when switching exercise files
+        setAvailableMuscleGroups(Array.isArray(tags) ? tags : []);
+        setWorkout(null); // Clear current workout when switching plans
       } catch (err) {
-        console.error('Failed to load exercise data:', err);
-        setError('Failed to load exercise data');
+        console.error('Failed to load plan data:', err);
+        setError('Failed to load plan data');
       }
     };
 
-    loadExerciseData();
-  }, [selectedExerciseFile]);
+    loadPlanData();
+  }, [selectedPlan]);
 
   const workoutPlanner = useMemo(() => {
     if (!exerciseData) return null;
     return new WorkoutPlanner(exerciseData.exercises);
-  }, [exerciseData]);
-
-  const availableMuscleGroups = useMemo(() => {
-    if (!exerciseData) return [];
-    const groups = new Set<string>();
-    exerciseData.exercises.forEach(exercise => {
-      exercise.tags.forEach(tag => groups.add(tag));
-    });
-    return Array.from(groups).sort();
   }, [exerciseData]);
 
   const handleGenerateWorkout = async (params: WorkoutGenerationParams) => {
@@ -171,7 +187,7 @@ export default function Home() {
         </Typography>
       </Box>
 
-      {isLoadingFiles ? (
+      {isLoadingPlans ? (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight="30vh">
           <CircularProgress />
         </Box>
@@ -183,9 +199,9 @@ export default function Home() {
               onGenerateWorkout={handleGenerateWorkout}
               isGenerating={isGenerating}
               error={error}
-              exerciseFiles={exerciseFiles}
-              selectedExerciseFile={selectedExerciseFile}
-              onExerciseFileChange={setSelectedExerciseFile}
+              plans={plans}
+              selectedPlan={selectedPlan}
+              onPlanChange={setSelectedPlan}
               exerciseDefaults={exerciseData?.defaults}
             />
           </Box>

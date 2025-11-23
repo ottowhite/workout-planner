@@ -70,6 +70,7 @@ export class WorkoutPlanner {
         muscle_group: muscleGroup,
         tags: exercise.tags,
         notes: exercise.notes || "",
+        specialised_notes: exercise.specialised_notes || "",
         link: exercise.link || ""
       };
 

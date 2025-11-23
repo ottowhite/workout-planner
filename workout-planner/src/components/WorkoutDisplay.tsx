@@ -113,9 +113,9 @@ export default function WorkoutDisplay({ workout }: WorkoutDisplayProps) {
                     }
                     secondary={
                       <Box>
-                        {exercise.notes && (
+                        {(exercise.specialised_notes || exercise.notes) && (
                           <Typography variant="body2" color="text.secondary" gutterBottom>
-                            <strong>Notes:</strong> {exercise.notes}
+                            <strong>Notes:</strong> {exercise.specialised_notes || exercise.notes}
                           </Typography>
                         )}
                         {exercise.link && (

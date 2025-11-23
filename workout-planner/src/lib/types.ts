@@ -4,6 +4,7 @@ export interface Exercise {
   rest_duration_sec: number;
   tags: string[];
   notes?: string | null;
+  specialised_notes?: string | null;
   link?: string | null;
 }
 
@@ -15,6 +16,7 @@ export interface ExerciseBlock {
   muscle_group: string;
   tags: string[];
   notes: string;
+  specialised_notes: string;
   link: string;
 }
 

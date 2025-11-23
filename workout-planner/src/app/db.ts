@@ -94,6 +94,7 @@ export async function getPlanData(planName: string): Promise<{
 	exercises: Array<{
 		name: string;
 		notes: string | null;
+		specialised_notes: string | null;
 		link: string | null;
 		tags: string[];
 	}>;
@@ -113,6 +114,7 @@ export async function getPlanData(planName: string): Promise<{
 			e.id,
 			e.name,
 			e.notes,
+			ep.specialised_notes,
 			e.link,
 			COALESCE(
 				array_agg(DISTINCT t.name ORDER BY t.name) FILTER (WHERE t.name IS NOT NULL),
@@ -124,7 +126,7 @@ export async function getPlanData(planName: string): Promise<{
 		LEFT JOIN ExerciseTag et ON e.id = et.exercise_id
 		LEFT JOIN Tag t ON et.tag_id = t.id
 		WHERE p.name = ${planName}
-		GROUP BY e.id, e.name, e.notes, e.link
+		GROUP BY e.id, e.name, e.notes, ep.specialised_notes, e.link
 		ORDER BY e.name
 	`;
 
@@ -142,6 +144,7 @@ export async function getPlanData(planName: string): Promise<{
 		exercises: exercises.map(ex => ({
 			name: ex.name as string,
 			notes: ex.notes as string | null,
+			specialised_notes: ex.specialised_notes as string | null,
 			link: ex.link as string | null,
 			tags: Array.isArray(ex.tags) ? ex.tags : []
 		})),
